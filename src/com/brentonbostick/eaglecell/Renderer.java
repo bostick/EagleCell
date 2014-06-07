@@ -24,8 +24,8 @@ class Renderer implements GLSurfaceView.Renderer {
 	 */
 	
 	static final boolean DIAGNOSTICS = true;
-	static final boolean LUMINANCE = false;
-	static final boolean CLEAR = true;
+	static final boolean LUMINANCE = true;
+	static final boolean CLEAR = false;
 	
 	/*
 	 * for Nexus 7:
@@ -35,13 +35,16 @@ class Renderer implements GLSurfaceView.Renderer {
 	 * 
 	 * optimizing onDrawFrame gets it up to 881
 	 * 
+	 * even better evolve function: 976
+	 * 
+	 * 
 	 * 
 	 * for Galaxy Tab 2 7.0:
 	 * can get 60 fps with grid size 481 
 	 * 
 	 */
-	static final int GRID_WIDTH = 496;
-	static final int GRID_HEIGHT = 496;
+	static final int GRID_WIDTH = 976;
+	static final int GRID_HEIGHT = 976;
 	
 	static final int FLOAT_SIZE_BYTES = 4;
 	static final int STRIDE_BYTES = 6 * FLOAT_SIZE_BYTES;
