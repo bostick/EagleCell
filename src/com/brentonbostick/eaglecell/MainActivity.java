@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.pm.ConfigurationInfo;
+import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,12 +15,16 @@ public class MainActivity extends Activity {
 	
 	Renderer renderer;
 	
+	static {
+        System.loadLibrary("eaglecell");
+    }
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		mGLSurfaceView = new GLSurfaceView(this);
-
+		
 		if (detectOpenGLES20()) {
 			
 			mGLSurfaceView.setEGLContextClientVersion(2);

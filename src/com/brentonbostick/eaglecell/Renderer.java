@@ -16,16 +16,7 @@ import android.util.Log;
 
 class Renderer implements GLSurfaceView.Renderer {
 	
-	/*
-	 * Droid RAZR M:
-	 * LUMINANCE false
-	 * CLEAR true
-	 * 
-	 */
-	
 	static final boolean DIAGNOSTICS = true;
-	static final boolean LUMINANCE = true;
-	static final boolean CLEAR = false;
 	
 	/*
 	 * for Nexus 7:
@@ -42,9 +33,13 @@ class Renderer implements GLSurfaceView.Renderer {
 	 * for Galaxy Tab 2 7.0:
 	 * can get 60 fps with grid size 481 
 	 * 
+	 * 
+	 * for Droid RAZR M
+	 * 1004
+	 * 
 	 */
-	static final int GRID_WIDTH = 976;
-	static final int GRID_HEIGHT = 976;
+	static final int GRID_WIDTH = 256;
+	static final int GRID_HEIGHT = 256;
 	
 	static final int FLOAT_SIZE_BYTES = 4;
 	static final int STRIDE_BYTES = 6 * FLOAT_SIZE_BYTES;
@@ -83,8 +78,12 @@ class Renderer implements GLSurfaceView.Renderer {
 	long time = System.currentTimeMillis();
 	int frame = 0;
 	
+    public native void nativeDrawFrame(int fbB, int evolveShaderProgram, int textureA, int jdirectShaderProgram, int fbA, int textureB);
+	
 	@Override
 	public void onDrawFrame(GL10 glUnused) {
+		
+//		nativeDrawFrame(fbB, evolveShader.program, textureA, directShader.program, fbA, textureB);
 		
 		if (stage == 0) {
 			
@@ -93,13 +92,28 @@ class Renderer implements GLSurfaceView.Renderer {
 			GLES20.glUseProgram(evolveShader.program);
 			
 			GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textureA);
-			if (DIAGNOSTICS) checkGlError("glBindTexture");
 			
 	        GLES20.glDrawElements(GLES20.GL_TRIANGLES, 3, GLES20.GL_UNSIGNED_BYTE, 0);
 			
+//			GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, fbA);
+//			
+//			GLES20.glUseProgram(evolveShader.program);
+//			
+//			GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textureB);
+//			
+//	        GLES20.glDrawElements(GLES20.GL_TRIANGLES, 3, GLES20.GL_UNSIGNED_BYTE, 0);
+//	        
+//			GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, fbB);
+//			
+//			GLES20.glUseProgram(evolveShader.program);
+//			
+//			GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textureA);
+//			
+//	        GLES20.glDrawElements(GLES20.GL_TRIANGLES, 3, GLES20.GL_UNSIGNED_BYTE, 0);
+	        
 			GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, 0);
 			
-			if (CLEAR) GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
+			GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
 			
 			GLES20.glUseProgram(directShader.program);
 	        GLES20.glDrawElements(GLES20.GL_TRIANGLES, 3, GLES20.GL_UNSIGNED_BYTE, 0);
@@ -115,9 +129,25 @@ class Renderer implements GLSurfaceView.Renderer {
 			
 	        GLES20.glDrawElements(GLES20.GL_TRIANGLES, 3, GLES20.GL_UNSIGNED_BYTE, 0);
 			
+//			GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, fbB);
+//			
+//			GLES20.glUseProgram(evolveShader.program);
+//			
+//			GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textureA);
+//			
+//	        GLES20.glDrawElements(GLES20.GL_TRIANGLES, 3, GLES20.GL_UNSIGNED_BYTE, 0);
+//	        
+//			GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, fbA);
+//			
+//			GLES20.glUseProgram(evolveShader.program);
+//			
+//			GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textureB);
+//			
+//	        GLES20.glDrawElements(GLES20.GL_TRIANGLES, 3, GLES20.GL_UNSIGNED_BYTE, 0);
+	        
 			GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, 0);
 			
-			if (CLEAR) GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
+			GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
 			
 			GLES20.glUseProgram(directShader.program);
 	        GLES20.glDrawElements(GLES20.GL_TRIANGLES, 3, GLES20.GL_UNSIGNED_BYTE, 0);
@@ -151,49 +181,17 @@ class Renderer implements GLSurfaceView.Renderer {
 	public void onSurfaceCreated(GL10 glUnused, EGLConfig config) {
 		try {
 			
-			String vertexShader = String.format(Locale.US, "attribute vec4 aPosition; attribute vec2 aTextureCoord; varying vec2 vTextureCoord; " +
-"void main() {" +
-"vTextureCoord = aTextureCoord;" +
-"gl_Position = aPosition;}", GRID_WIDTH, GRID_HEIGHT);
+			String exts = GLES20.glGetString(GLES20.GL_EXTENSIONS).replace(' ', '\n');
 			
-			String evolveFragmentShader = String.format(Locale.US, "precision mediump float; uniform sampler2D uTexture1; varying vec2 vTextureCoord; " +
-"void main() {" +
-"float count = 0.0;" +
-"vec4 C = texture2D( uTexture1, vTextureCoord );" +
-"vec4 E = texture2D( uTexture1, vec2(vTextureCoord.x + 1.0/%1$d.0, vTextureCoord.y) );" +
-"vec4 N = texture2D( uTexture1, vec2(vTextureCoord.x, vTextureCoord.y + 1.0/%2$d.0) );" +
-"vec4 W = texture2D( uTexture1, vec2(vTextureCoord.x - 1.0/%1$d.0, vTextureCoord.y) );" +
-"vec4 S = texture2D( uTexture1, vec2(vTextureCoord.x, vTextureCoord.y - 1.0/%2$d.0) );" +
-"vec4 NE = texture2D( uTexture1, vec2(vTextureCoord.x + 1.0/%1$d.0, vTextureCoord.y + 1.0/%2$d.0) );" +
-"vec4 NW = texture2D( uTexture1, vec2(vTextureCoord.x - 1.0/%1$d.0, vTextureCoord.y + 1.0/%2$d.0) );" +
-"vec4 SE = texture2D( uTexture1, vec2(vTextureCoord.x + 1.0/%1$d.0, vTextureCoord.y - 1.0/%2$d.0) );" +
-"vec4 SW = texture2D( uTexture1, vec2(vTextureCoord.x - 1.0/%1$d.0, vTextureCoord.y - 1.0/%2$d.0) );" +
-"count += E.r;" +
-"count += N.r;" +
-"count += W.r;" +
-"count += S.r;" +
-"count += NE.r;" +
-"count += NW.r;" +
-"count += SE.r;" +
-"count += SW.r;" +
-//"if (count == 3.0 || (count == 2.0 && C.r == 1.0)) {" +
-//"gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);" +
-//"} else {" +
-//"gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);" +
-//"}" +
-//"float val = step(3.4, -(count*count) + 5.5*count - 4.0 + C.r);" +
-"float val = step(7.4, count * (5.5 - count) + C.r);" +
-"gl_FragColor = vec4(val, val, val, 1.0);" +
-"}", GRID_WIDTH, GRID_HEIGHT);
+			String vertexShaderString = Utilities.readRawResource(mContext, R.raw.vertex);
+			String directFragmentShaderString = Utilities.readRawResource(mContext, R.raw.direct_fragment);
+			String evolveFragmentShaderString = Utilities.readRawResource(mContext, R.raw.evolve_fragment);
 			
-			String directFragmentShader =
-"precision mediump float;" +
-"uniform sampler2D uTexture1;" +
-"varying vec2 vTextureCoord;" +
-"void main() {" +
-"gl_FragColor = texture2D(uTexture1, vTextureCoord);" +
-//"gl_FragColor = vec4(0.0, 0.0, 1.0, 1.0);" + 
-"}";
+			String vertexShader = String.format(Locale.US, vertexShaderString, GRID_WIDTH, GRID_HEIGHT);
+			
+			String evolveFragmentShader = String.format(Locale.US, evolveFragmentShaderString, GRID_WIDTH, GRID_HEIGHT);
+			
+			String directFragmentShader = String.format(Locale.US, directFragmentShaderString, GRID_WIDTH, GRID_HEIGHT);
 			
 			directShader = new Shader(vertexShader, directFragmentShader);
 			evolveShader = new Shader(vertexShader, evolveFragmentShader);
@@ -254,28 +252,16 @@ class Renderer implements GLSurfaceView.Renderer {
 		GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_NEAREST);
 		GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_NEAREST);
 
-		if (LUMINANCE) {
-			texBufferA = ByteBuffer.allocateDirect(1 * GRID_WIDTH * GRID_HEIGHT).order(ByteOrder.nativeOrder());
-		} else {
-			texBufferA = ByteBuffer.allocateDirect(2 * GRID_WIDTH * GRID_HEIGHT).order(ByteOrder.nativeOrder());
-		}
+		texBufferA = ByteBuffer.allocateDirect(2 * GRID_WIDTH * GRID_HEIGHT).order(ByteOrder.nativeOrder());
 		
 		Random rand = new Random();
 		for (int i = 0; i < GRID_WIDTH*GRID_HEIGHT/2; i++) {
 			int index = rand.nextInt(GRID_WIDTH*GRID_HEIGHT);
-			if (LUMINANCE) {
-				texBufferA.put(index, (byte)255);
-			} else {
-				texBufferA.put(2*index, (byte)255);
-				texBufferA.put(2*index+1, (byte)255);
-			}
+			texBufferA.put(2*index, (byte)255);
+			texBufferA.put(2*index+1, (byte)255);
 		}
 		
-		if (LUMINANCE) {
-			GLES20.glTexImage2D(GLES20.GL_TEXTURE_2D, 0, GLES20.GL_LUMINANCE, GRID_WIDTH, GRID_HEIGHT, 0, GLES20.GL_LUMINANCE, GLES20.GL_UNSIGNED_BYTE, texBufferA);
-		} else {
-			GLES20.glTexImage2D(GLES20.GL_TEXTURE_2D, 0, GLES20.GL_RGB, GRID_WIDTH, GRID_HEIGHT, 0, GLES20.GL_RGB, GLES20.GL_UNSIGNED_SHORT_5_6_5, texBufferA);
-		}
+		GLES20.glTexImage2D(GLES20.GL_TEXTURE_2D, 0, GLES20.GL_RGB, GRID_WIDTH, GRID_HEIGHT, 0, GLES20.GL_RGB, GLES20.GL_UNSIGNED_SHORT_5_6_5, texBufferA);
 		
 		GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, fbA);
 		
@@ -298,17 +284,9 @@ class Renderer implements GLSurfaceView.Renderer {
 		GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_NEAREST);
 		GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_NEAREST);
 		
-		if (LUMINANCE) {
-			texBufferB = ByteBuffer.allocateDirect(1 * GRID_WIDTH * GRID_HEIGHT).order(ByteOrder.nativeOrder());
-		} else {
-			texBufferB = ByteBuffer.allocateDirect(2 * GRID_WIDTH * GRID_HEIGHT).order(ByteOrder.nativeOrder());
-		}
+		texBufferB = ByteBuffer.allocateDirect(2 * GRID_WIDTH * GRID_HEIGHT).order(ByteOrder.nativeOrder());
 		
-		if (LUMINANCE) {
-			GLES20.glTexImage2D(GLES20.GL_TEXTURE_2D, 0, GLES20.GL_LUMINANCE, GRID_WIDTH, GRID_HEIGHT, 0, GLES20.GL_LUMINANCE, GLES20.GL_UNSIGNED_BYTE, texBufferB);
-		} else {
-			GLES20.glTexImage2D(GLES20.GL_TEXTURE_2D, 0, GLES20.GL_RGB, GRID_WIDTH, GRID_HEIGHT, 0, GLES20.GL_RGB, GLES20.GL_UNSIGNED_SHORT_5_6_5, texBufferB);
-		}
+		GLES20.glTexImage2D(GLES20.GL_TEXTURE_2D, 0, GLES20.GL_RGB, GRID_WIDTH, GRID_HEIGHT, 0, GLES20.GL_RGB, GLES20.GL_UNSIGNED_SHORT_5_6_5, texBufferB);
 		
 		GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, fbB);
 		
