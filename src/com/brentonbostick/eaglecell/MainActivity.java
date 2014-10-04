@@ -1,89 +1,80 @@
 package com.brentonbostick.eaglecell;
 
 import android.app.Activity;
-import android.app.ActivityManager;
-import android.content.Context;
-import android.content.pm.ConfigurationInfo;
-import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.Surface;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity {// implements SurfaceHolder.Callback {
 	
-	private GLSurfaceView mGLSurfaceView;
+	private GLSurfaceView surfaceView;
 	
 	Renderer renderer;
 	
-	static {
-        System.loadLibrary("eaglecell");
-    }
+//	static {
+//        System.loadLibrary("eaglecell");
+//    }
+//	
+//    public static native void nativeOnStart();
+//    public static native void nativeOnResume();
+//    public static native void nativeOnPause();
+//    public static native void nativeOnStop();
+//    public static native void nativeSetSurface(Surface surface);
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		mGLSurfaceView = new GLSurfaceView(this);
+//        setContentView(R.layout.activity_main);
+//        SurfaceView surfaceView = (SurfaceView)findViewById(R.id.surfaceview);
+//        surfaceView.getHolder().addCallback(this);
 		
-		if (detectOpenGLES20()) {
+		surfaceView = new GLSurfaceView(this);
 			
-			mGLSurfaceView.setEGLContextClientVersion(2);
+		surfaceView.setEGLContextClientVersion(2);
 			
-			renderer = new Renderer(this);
+		renderer = new Renderer(this);
 			
-			mGLSurfaceView.setRenderer(renderer);
-			
-//			mGLSurfaceView.setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
-			
-//			Thread rendererThread = new Thread() {
-//				
-//				@Override
-//				public void run() {
-//					
-//					try {
-//						
-//						while (true) {
-//							if (paused) {
-//								break;
-//							}
-//							synchronized (renderer.obj) {
-//								renderer.obj.wait();
-//							}
-//							
-//							Log.d("request", "requestRender");
-//							mGLSurfaceView.requestRender();
-//						}
-//						
-//					} catch (InterruptedException e) {
-//						
-//					}
-//					
-//				}
-//				
-//			};
-//			
-//			rendererThread.start();
-			
-		} else {
-			this.finish();
-		}
-		
-		// set the content view
-		setContentView(mGLSurfaceView);
+		surfaceView.setRenderer(renderer);
+
+		setContentView(surfaceView);
 	}
 	
-	boolean paused = false;
-	
-	@Override
-	public void onPause() {
-		super.onPause();
-		paused = true;
-	}
-	
-	private boolean detectOpenGLES20() {
-		ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-		ConfigurationInfo info = am.getDeviceConfigurationInfo();
-		Log.d("OpenGL Ver:", info.getGlEsVersion());
-		return (info.reqGlEsVersion >= 0x20000);
-	}
+//	@Override
+//    protected void onStart() {
+//        super.onStart();
+//        nativeOnStart();
+//    }
+//
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        nativeOnResume();
+//    }
+//    
+//    @Override
+//    protected void onPause() {
+//        super.onPause();
+//        nativeOnPause();
+//    }
+//
+//    @Override
+//    protected void onStop() {
+//        super.onStop();
+//        nativeOnStop();
+//    }
+//	
+//	public void surfaceChanged(SurfaceHolder holder, int format, int w, int h) {
+//        nativeSetSurface(holder.getSurface());
+//    }
+//
+//    public void surfaceCreated(SurfaceHolder holder) {
+//    }
+//
+//    public void surfaceDestroyed(SurfaceHolder holder) {
+//        nativeSetSurface(null);
+//    }
+    
 }

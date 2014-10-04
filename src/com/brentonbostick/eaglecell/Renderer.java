@@ -17,6 +17,7 @@ import android.util.Log;
 class Renderer implements GLSurfaceView.Renderer {
 	
 	static final boolean DIAGNOSTICS = true;
+	static final boolean RGBA = true;
 	
 	/*
 	 * for Nexus 7:
@@ -38,8 +39,8 @@ class Renderer implements GLSurfaceView.Renderer {
 	 * 1004
 	 * 
 	 */
-	static final int GRID_WIDTH = 256;
-	static final int GRID_HEIGHT = 256;
+	static final int GRID_WIDTH = 540;
+	static final int GRID_HEIGHT = 778;
 	
 	static final int FLOAT_SIZE_BYTES = 4;
 	static final int STRIDE_BYTES = 6 * FLOAT_SIZE_BYTES;
@@ -49,10 +50,10 @@ class Renderer implements GLSurfaceView.Renderer {
 	Shader directShader;
 	Shader evolveShader;
 
-	int direct_uTexture1;
+	int direct_uTexture;
 	int direct_aPosition;
 	int direct_aTextureCoord;
-	int evolve_uTexture1;
+	int evolve_uTexture;
 	int evolve_aPosition;
 	int evolve_aTextureCoord;
 	
@@ -155,11 +156,11 @@ class Renderer implements GLSurfaceView.Renderer {
 			stage = 0;
 		}
 		
-//		try {
-//			Thread.sleep(10000);
-//		} catch (InterruptedException e) {
-//			
-//		}
+		try {
+			Thread.sleep(000);
+		} catch (InterruptedException e) {
+			
+		}
 		
 		frame++;
 		
@@ -181,11 +182,18 @@ class Renderer implements GLSurfaceView.Renderer {
 	public void onSurfaceCreated(GL10 glUnused, EGLConfig config) {
 		try {
 			
-			String exts = GLES20.glGetString(GLES20.GL_EXTENSIONS).replace(' ', '\n');
+//			String exts = GLES20.glGetString(GLES20.GL_EXTENSIONS).replace(' ', '\n');
 			
 			String vertexShaderString = Utilities.readRawResource(mContext, R.raw.vertex);
-			String directFragmentShaderString = Utilities.readRawResource(mContext, R.raw.direct_fragment);
-			String evolveFragmentShaderString = Utilities.readRawResource(mContext, R.raw.evolve_fragment);
+			String directFragmentShaderString;
+			String evolveFragmentShaderString;
+			if (RGBA) {
+				directFragmentShaderString = Utilities.readRawResource(mContext, R.raw.direct_rgba_fragment);
+				evolveFragmentShaderString = Utilities.readRawResource(mContext, R.raw.evolve_rgba_fragment);
+			} else {
+				directFragmentShaderString = Utilities.readRawResource(mContext, R.raw.direct_fragment);
+				evolveFragmentShaderString = Utilities.readRawResource(mContext, R.raw.evolve_fragment);
+			}
 			
 			String vertexShader = String.format(Locale.US, vertexShaderString, GRID_WIDTH, GRID_HEIGHT);
 			
@@ -198,13 +206,13 @@ class Renderer implements GLSurfaceView.Renderer {
 			
 			GLES20.glUseProgram(directShader.program);
 			
-			direct_uTexture1 = GLES20.glGetUniformLocation(directShader.program, "uTexture1");
+			direct_uTexture = GLES20.glGetUniformLocation(directShader.program, "uTexture");
 			direct_aPosition = GLES20.glGetAttribLocation(directShader.program, "aPosition");
 			direct_aTextureCoord = GLES20.glGetAttribLocation(directShader.program, "aTextureCoord");
 			
 			GLES20.glUseProgram(evolveShader.program);
 			
-			evolve_uTexture1 = GLES20.glGetUniformLocation(evolveShader.program, "uTexture1");
+			evolve_uTexture = GLES20.glGetUniformLocation(evolveShader.program, "uTexture");
 			evolve_aPosition = GLES20.glGetAttribLocation(evolveShader.program, "aPosition");
 			evolve_aTextureCoord = GLES20.glGetAttribLocation(evolveShader.program, "aTextureCoord");
 			
@@ -257,11 +265,22 @@ class Renderer implements GLSurfaceView.Renderer {
 		Random rand = new Random();
 		for (int i = 0; i < GRID_WIDTH*GRID_HEIGHT/2; i++) {
 			int index = rand.nextInt(GRID_WIDTH*GRID_HEIGHT);
-			texBufferA.put(2*index, (byte)255);
-			texBufferA.put(2*index+1, (byte)255);
+			if (RGBA) {
+				int b = rand.nextInt(2);
+				int a = rand.nextInt(2);
+				int r = rand.nextInt(2);
+				int g = rand.nextInt(2);
+				texBufferA.put(2*index, (byte)(0xf0*b | 0x0f*a));
+				texBufferA.put(2*index+1, (byte)(0xf0*r | 0x0f*g));
+			} else {
+				/*
+				 * only set R bits
+				 */
+				texBufferA.put(2*index+1, (byte)0xf0);
+			}
 		}
 		
-		GLES20.glTexImage2D(GLES20.GL_TEXTURE_2D, 0, GLES20.GL_RGB, GRID_WIDTH, GRID_HEIGHT, 0, GLES20.GL_RGB, GLES20.GL_UNSIGNED_SHORT_5_6_5, texBufferA);
+		GLES20.glTexImage2D(GLES20.GL_TEXTURE_2D, 0, GLES20.GL_RGBA, GRID_WIDTH, GRID_HEIGHT, 0, GLES20.GL_RGBA, GLES20.GL_UNSIGNED_SHORT_4_4_4_4, texBufferA);
 		
 		GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, fbA);
 		
@@ -286,7 +305,7 @@ class Renderer implements GLSurfaceView.Renderer {
 		
 		texBufferB = ByteBuffer.allocateDirect(2 * GRID_WIDTH * GRID_HEIGHT).order(ByteOrder.nativeOrder());
 		
-		GLES20.glTexImage2D(GLES20.GL_TEXTURE_2D, 0, GLES20.GL_RGB, GRID_WIDTH, GRID_HEIGHT, 0, GLES20.GL_RGB, GLES20.GL_UNSIGNED_SHORT_5_6_5, texBufferB);
+		GLES20.glTexImage2D(GLES20.GL_TEXTURE_2D, 0, GLES20.GL_RGBA, GRID_WIDTH, GRID_HEIGHT, 0, GLES20.GL_RGBA, GLES20.GL_UNSIGNED_SHORT_4_4_4_4, texBufferB);
 		
 		GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, fbB);
 		
@@ -296,9 +315,9 @@ class Renderer implements GLSurfaceView.Renderer {
 		
 		
 		float verts[] = 
-			{ -1, -1, 1, 1,     0, 0,
-			  -1,  3, 1, 1,     0, 2,
-			   3, -1, 1, 1,     2, 0 };
+			{ -1, -1, 0, 1,     0, 0,
+			  -1,  3, 0, 1,     0, 2,
+			   3, -1, 0, 1,     2, 0 };
 		
 		FloatBuffer vertexBuffer = ByteBuffer.allocateDirect(verts.length * FLOAT_SIZE_BYTES).order(ByteOrder.nativeOrder()).asFloatBuffer();
 		vertexBuffer.put(verts);

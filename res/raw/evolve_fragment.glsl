@@ -1,21 +1,20 @@
 precision mediump float;
 
-uniform sampler2D uTexture1;
+uniform sampler2D uTexture;
 
 varying vec2 vTextureCoord;
 
 void main() {
-	float count = 0.0;
-	vec4 C = texture2D( uTexture1, vTextureCoord );
-	vec4 E = texture2D( uTexture1, vec2(vTextureCoord.x + 1.0/%1$d.0, vTextureCoord.y) );
-	vec4 N = texture2D( uTexture1, vec2(vTextureCoord.x, vTextureCoord.y + 1.0/%2$d.0) );
-	vec4 W = texture2D( uTexture1, vec2(vTextureCoord.x - 1.0/%1$d.0, vTextureCoord.y) );
-	vec4 S = texture2D( uTexture1, vec2(vTextureCoord.x, vTextureCoord.y - 1.0/%2$d.0) );
-	vec4 NE = texture2D( uTexture1, vec2(vTextureCoord.x + 1.0/%1$d.0, vTextureCoord.y + 1.0/%2$d.0) );
-	vec4 NW = texture2D( uTexture1, vec2(vTextureCoord.x - 1.0/%1$d.0, vTextureCoord.y + 1.0/%2$d.0) );
-	vec4 SE = texture2D( uTexture1, vec2(vTextureCoord.x + 1.0/%1$d.0, vTextureCoord.y - 1.0/%2$d.0) );
-	vec4 SW = texture2D( uTexture1, vec2(vTextureCoord.x - 1.0/%1$d.0, vTextureCoord.y - 1.0/%2$d.0) );
-	count += E.r;
+	vec4 C = texture2D(uTexture, vTextureCoord);
+	vec4 E = texture2D(uTexture, vec2(vTextureCoord.x + 1.0/%1$d.0, vTextureCoord.y));
+	vec4 N = texture2D(uTexture, vec2(vTextureCoord.x, vTextureCoord.y + 1.0/%2$d.0));
+	vec4 W = texture2D(uTexture, vec2(vTextureCoord.x - 1.0/%1$d.0, vTextureCoord.y));
+	vec4 S = texture2D(uTexture, vec2(vTextureCoord.x, vTextureCoord.y - 1.0/%2$d.0));
+	vec4 NE = texture2D(uTexture, vec2(vTextureCoord.x + 1.0/%1$d.0, vTextureCoord.y + 1.0/%2$d.0));
+	vec4 NW = texture2D(uTexture, vec2(vTextureCoord.x - 1.0/%1$d.0, vTextureCoord.y + 1.0/%2$d.0));
+	vec4 SE = texture2D(uTexture, vec2(vTextureCoord.x + 1.0/%1$d.0, vTextureCoord.y - 1.0/%2$d.0));
+	vec4 SW = texture2D(uTexture, vec2(vTextureCoord.x - 1.0/%1$d.0, vTextureCoord.y - 1.0/%2$d.0));
+	float count = E.r;
 	count += N.r;
 	count += W.r;
 	count += S.r;
