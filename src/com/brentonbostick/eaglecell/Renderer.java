@@ -38,9 +38,15 @@ class Renderer implements GLSurfaceView.Renderer {
 	 * for Droid RAZR M
 	 * 1004
 	 * 
+	 * 
+	 * Nexus 10
+	 * 2560 x 1600
+	 * 
+	 * Galaxy Tab 4 8"
+	 * 800 x 1172
 	 */
-	static final int GRID_WIDTH = 540;
-	static final int GRID_HEIGHT = 778;
+//	static final int GRID_WIDTH = 800;
+//	static final int GRID_HEIGHT = 1172;
 	
 	static final int FLOAT_SIZE_BYTES = 4;
 	static final int STRIDE_BYTES = 6 * FLOAT_SIZE_BYTES;
@@ -176,10 +182,8 @@ class Renderer implements GLSurfaceView.Renderer {
 	}
 	
 	public void onSurfaceChanged(GL10 glUnused, int width, int height) {
-		GLES20.glViewport(0, 0, GRID_WIDTH, GRID_HEIGHT);
-	}
-	
-	public void onSurfaceCreated(GL10 glUnused, EGLConfig config) {
+		
+		
 		try {
 			
 //			String exts = GLES20.glGetString(GLES20.GL_EXTENSIONS).replace(' ', '\n');
@@ -195,11 +199,11 @@ class Renderer implements GLSurfaceView.Renderer {
 				evolveFragmentShaderString = Utilities.readRawResource(mContext, R.raw.evolve_fragment);
 			}
 			
-			String vertexShader = String.format(Locale.US, vertexShaderString, GRID_WIDTH, GRID_HEIGHT);
+			String vertexShader = String.format(Locale.US, vertexShaderString, width, height);
 			
-			String evolveFragmentShader = String.format(Locale.US, evolveFragmentShaderString, GRID_WIDTH, GRID_HEIGHT);
+			String evolveFragmentShader = String.format(Locale.US, evolveFragmentShaderString, width, height);
 			
-			String directFragmentShader = String.format(Locale.US, directFragmentShaderString, GRID_WIDTH, GRID_HEIGHT);
+			String directFragmentShader = String.format(Locale.US, directFragmentShaderString, width, height);
 			
 			directShader = new Shader(vertexShader, directFragmentShader);
 			evolveShader = new Shader(vertexShader, evolveFragmentShader);
@@ -220,7 +224,7 @@ class Renderer implements GLSurfaceView.Renderer {
 			Log.d("Shader Setup", e.getLocalizedMessage());
 		}
         
-		setupFBOsAndTextures();
+		setupFBOsAndTextures(width, height);
 		
 		
 		GLES20.glUseProgram(directShader.program);
@@ -240,9 +244,17 @@ class Renderer implements GLSurfaceView.Renderer {
 		GLES20.glEnableVertexAttribArray(evolve_aTextureCoord);
 		
 		if (DIAGNOSTICS) checkGlError("onSurfaceCreated");
+		
+		
+		
+		GLES20.glViewport(0, 0, width, height);
 	}
 	
-	private void setupFBOsAndTextures() {
+	public void onSurfaceCreated(GL10 glUnused, EGLConfig config) {
+		
+	}
+	
+	private void setupFBOsAndTextures(int width, int height) {
 		
 		int[] out = new int[1];
 		
@@ -260,11 +272,11 @@ class Renderer implements GLSurfaceView.Renderer {
 		GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_NEAREST);
 		GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_NEAREST);
 
-		texBufferA = ByteBuffer.allocateDirect(2 * GRID_WIDTH * GRID_HEIGHT).order(ByteOrder.nativeOrder());
+		texBufferA = ByteBuffer.allocateDirect(2 * width * height).order(ByteOrder.nativeOrder());
 		
 		Random rand = new Random();
-		for (int i = 0; i < GRID_WIDTH*GRID_HEIGHT/2; i++) {
-			int index = rand.nextInt(GRID_WIDTH*GRID_HEIGHT);
+		for (int i = 0; i < width * height / 2; i++) {
+			int index = rand.nextInt(width * height);
 			if (RGBA) {
 				int b = rand.nextInt(2);
 				int a = rand.nextInt(2);
@@ -280,7 +292,7 @@ class Renderer implements GLSurfaceView.Renderer {
 			}
 		}
 		
-		GLES20.glTexImage2D(GLES20.GL_TEXTURE_2D, 0, GLES20.GL_RGBA, GRID_WIDTH, GRID_HEIGHT, 0, GLES20.GL_RGBA, GLES20.GL_UNSIGNED_SHORT_4_4_4_4, texBufferA);
+		GLES20.glTexImage2D(GLES20.GL_TEXTURE_2D, 0, GLES20.GL_RGBA, width, height, 0, GLES20.GL_RGBA, GLES20.GL_UNSIGNED_SHORT_4_4_4_4, texBufferA);
 		
 		GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, fbA);
 		
@@ -303,9 +315,9 @@ class Renderer implements GLSurfaceView.Renderer {
 		GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_NEAREST);
 		GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_NEAREST);
 		
-		texBufferB = ByteBuffer.allocateDirect(2 * GRID_WIDTH * GRID_HEIGHT).order(ByteOrder.nativeOrder());
+		texBufferB = ByteBuffer.allocateDirect(2 * width * height).order(ByteOrder.nativeOrder());
 		
-		GLES20.glTexImage2D(GLES20.GL_TEXTURE_2D, 0, GLES20.GL_RGBA, GRID_WIDTH, GRID_HEIGHT, 0, GLES20.GL_RGBA, GLES20.GL_UNSIGNED_SHORT_4_4_4_4, texBufferB);
+		GLES20.glTexImage2D(GLES20.GL_TEXTURE_2D, 0, GLES20.GL_RGBA, width, height, 0, GLES20.GL_RGBA, GLES20.GL_UNSIGNED_SHORT_4_4_4_4, texBufferB);
 		
 		GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, fbB);
 		
