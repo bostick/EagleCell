@@ -15,6 +15,8 @@ public class Shader {
 	
 	private int compile(String vs, String fs) {
 		
+//		Log.d("bkb", "compiling");
+		
 		vertexShader = loadShader(GLES20.GL_VERTEX_SHADER, vs);
 		if (vertexShader == 0) {
 			return 0;

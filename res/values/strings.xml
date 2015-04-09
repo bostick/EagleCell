@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">GLCA</string>
+    <string name="app_name">EagleCell</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-
+    
+    <string name="service_label">EagleCell Wallpaper</string>
+    <string name="description">Live Wallpaper for the Game of Life using OpenGL ES!</string>
+    
 </resources>

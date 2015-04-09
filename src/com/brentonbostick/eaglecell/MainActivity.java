@@ -3,15 +3,12 @@ package com.brentonbostick.eaglecell;
 import android.app.Activity;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
-import android.view.Surface;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
 
 public class MainActivity extends Activity {// implements SurfaceHolder.Callback {
 	
 	private GLSurfaceView surfaceView;
 	
-	Renderer renderer;
+	MyRenderer renderer;
 	
 //	static {
 //        System.loadLibrary("eaglecell");
@@ -35,7 +32,7 @@ public class MainActivity extends Activity {// implements SurfaceHolder.Callback
 			
 		surfaceView.setEGLContextClientVersion(2);
 			
-		renderer = new Renderer(this);
+		renderer = new MyRenderer(this);
 			
 		surfaceView.setRenderer(renderer);
 

@@ -9,12 +9,12 @@ import java.util.Random;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
+import net.rbgrn.android.glwallpaperservice.GLWallpaperService;
 import android.content.Context;
 import android.opengl.GLES20;
-import android.opengl.GLSurfaceView;
 import android.util.Log;
 
-class Renderer implements GLSurfaceView.Renderer {
+public class MyRenderer implements GLWallpaperService.Renderer {
 	
 	static final boolean DIAGNOSTICS = true;
 	static final boolean RGBA = true;
@@ -76,7 +76,7 @@ class Renderer implements GLSurfaceView.Renderer {
 
 	Context mContext;
 	
-	public Renderer(Context context) {
+	public MyRenderer(Context context) {
 		mContext = context;
 	}
 	
@@ -89,6 +89,7 @@ class Renderer implements GLSurfaceView.Renderer {
 	
 	@Override
 	public void onDrawFrame(GL10 glUnused) {
+//		Log.d("bkb", "draw frame");
 		
 //		nativeDrawFrame(fbB, evolveShader.program, textureA, directShader.program, fbA, textureB);
 		
@@ -172,7 +173,7 @@ class Renderer implements GLSurfaceView.Renderer {
 		
 		long cur = System.currentTimeMillis();
 		if (cur - time > 5000) {
-			Log.d("fps", "fps: " + frame / ((cur - time) / 1000f));
+//			Log.d("fps", "fps: " + frame / ((cur - time) / 1000f));
 			
 			time = cur;
 			frame = 0;
@@ -181,8 +182,9 @@ class Renderer implements GLSurfaceView.Renderer {
 		if (DIAGNOSTICS) checkGlError("onDrawFrame");
 	}
 	
+	@Override
 	public void onSurfaceChanged(GL10 glUnused, int width, int height) {
-		
+//		Log.d("bkb", "surface changed");
 		
 		try {
 			
@@ -198,6 +200,8 @@ class Renderer implements GLSurfaceView.Renderer {
 				directFragmentShaderString = Utilities.readRawResource(mContext, R.raw.direct_fragment);
 				evolveFragmentShaderString = Utilities.readRawResource(mContext, R.raw.evolve_fragment);
 			}
+			
+//			Log.d("bkb", "strings: " + directFragmentShaderString.substring(0,  20) + "     " + evolveFragmentShaderString.substring(0, 20));
 			
 			String vertexShader = String.format(Locale.US, vertexShaderString, width, height);
 			
@@ -250,8 +254,9 @@ class Renderer implements GLSurfaceView.Renderer {
 		GLES20.glViewport(0, 0, width, height);
 	}
 	
+	@Override
 	public void onSurfaceCreated(GL10 glUnused, EGLConfig config) {
-		
+//		Log.d("bkb", "surface created");
 	}
 	
 	private void setupFBOsAndTextures(int width, int height) {
@@ -396,5 +401,8 @@ class Renderer implements GLSurfaceView.Renderer {
 			throw new RuntimeException("check Framebuffer glError " + error);
 		}
 	}
-
+	
+	public void release() {
+		
+	}
 }
