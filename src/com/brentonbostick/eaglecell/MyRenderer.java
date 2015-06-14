@@ -17,7 +17,17 @@ import android.util.Log;
 public class MyRenderer implements GLWallpaperService.Renderer {
 	
 	static final boolean DIAGNOSTICS = true;
-	static final boolean RGBA = true;
+	static final boolean RGBA = false;
+	static final int TEXTURE_FILTER_PARAM = GLES20.GL_NEAREST;
+	static final boolean HALF_PIXEL_CORRECTION = false;
+//	static final int WIDTH_TO_USE = 341;
+//	static final int HEIGHT_TO_USE = 341;
+//	static final int WIDTH_TO_USE = 683;
+//	static final int HEIGHT_TO_USE = 683;
+	static final int WIDTH_TO_USE = -1;
+	static final int HEIGHT_TO_USE = -1;
+	
+	static final int STEPS = 1;
 	
 	/*
 	 * for Nexus 7:
@@ -44,6 +54,9 @@ public class MyRenderer implements GLWallpaperService.Renderer {
 	 * 
 	 * Galaxy Tab 4 8"
 	 * 800 x 1172
+	 * 
+	 * droid razr m
+	 * 540 x 778
 	 */
 //	static final int GRID_WIDTH = 800;
 //	static final int GRID_HEIGHT = 1172;
@@ -101,30 +114,32 @@ public class MyRenderer implements GLWallpaperService.Renderer {
 			
 			GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textureA);
 			
-	        GLES20.glDrawElements(GLES20.GL_TRIANGLES, 3, GLES20.GL_UNSIGNED_BYTE, 0);
-			
-//			GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, fbA);
-//			
-//			GLES20.glUseProgram(evolveShader.program);
-//			
-//			GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textureB);
-//			
-//	        GLES20.glDrawElements(GLES20.GL_TRIANGLES, 3, GLES20.GL_UNSIGNED_BYTE, 0);
-//	        
-//			GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, fbB);
-//			
-//			GLES20.glUseProgram(evolveShader.program);
-//			
-//			GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textureA);
-//			
-//	        GLES20.glDrawElements(GLES20.GL_TRIANGLES, 3, GLES20.GL_UNSIGNED_BYTE, 0);
+	        GLES20.glDrawElements(GLES20.GL_TRIANGLE_STRIP, 4, GLES20.GL_UNSIGNED_BYTE, 0);
+	
+	        for (int i = 0; i < (STEPS-1); i++) {
+				GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, fbA);
+				
+				GLES20.glUseProgram(evolveShader.program);
+				
+				GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textureB);
+				
+		        GLES20.glDrawElements(GLES20.GL_TRIANGLE_STRIP, 4, GLES20.GL_UNSIGNED_BYTE, 0);
+		        
+				GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, fbB);
+				
+				GLES20.glUseProgram(evolveShader.program);
+				
+				GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textureA);
+				
+		        GLES20.glDrawElements(GLES20.GL_TRIANGLE_STRIP, 4, GLES20.GL_UNSIGNED_BYTE, 0);	
+	        }
 	        
 			GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, 0);
 			
 			GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
 			
 			GLES20.glUseProgram(directShader.program);
-	        GLES20.glDrawElements(GLES20.GL_TRIANGLES, 3, GLES20.GL_UNSIGNED_BYTE, 0);
+	        GLES20.glDrawElements(GLES20.GL_TRIANGLE_STRIP, 4, GLES20.GL_UNSIGNED_BYTE, 0);
 	        
 			stage = 1;
 		} else {
@@ -135,30 +150,32 @@ public class MyRenderer implements GLWallpaperService.Renderer {
 			
 			GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textureB);
 			
-	        GLES20.glDrawElements(GLES20.GL_TRIANGLES, 3, GLES20.GL_UNSIGNED_BYTE, 0);
+	        GLES20.glDrawElements(GLES20.GL_TRIANGLE_STRIP, 4, GLES20.GL_UNSIGNED_BYTE, 0);
 			
-//			GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, fbB);
-//			
-//			GLES20.glUseProgram(evolveShader.program);
-//			
-//			GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textureA);
-//			
-//	        GLES20.glDrawElements(GLES20.GL_TRIANGLES, 3, GLES20.GL_UNSIGNED_BYTE, 0);
-//	        
-//			GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, fbA);
-//			
-//			GLES20.glUseProgram(evolveShader.program);
-//			
-//			GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textureB);
-//			
-//	        GLES20.glDrawElements(GLES20.GL_TRIANGLES, 3, GLES20.GL_UNSIGNED_BYTE, 0);
+	        for (int i = 0; i < (STEPS-1); i++) {
+				GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, fbB);
+				
+				GLES20.glUseProgram(evolveShader.program);
+				
+				GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textureA);
+				
+		        GLES20.glDrawElements(GLES20.GL_TRIANGLE_STRIP, 4, GLES20.GL_UNSIGNED_BYTE, 0);
+		        
+				GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, fbA);
+				
+				GLES20.glUseProgram(evolveShader.program);
+				
+				GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textureB);
+				
+		        GLES20.glDrawElements(GLES20.GL_TRIANGLE_STRIP, 4, GLES20.GL_UNSIGNED_BYTE, 0);	
+	        }
 	        
 			GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, 0);
 			
 			GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
 			
 			GLES20.glUseProgram(directShader.program);
-	        GLES20.glDrawElements(GLES20.GL_TRIANGLES, 3, GLES20.GL_UNSIGNED_BYTE, 0);
+	        GLES20.glDrawElements(GLES20.GL_TRIANGLE_STRIP, 4, GLES20.GL_UNSIGNED_BYTE, 0);
 			
 			stage = 0;
 		}
@@ -186,6 +203,36 @@ public class MyRenderer implements GLWallpaperService.Renderer {
 	public void onSurfaceChanged(GL10 glUnused, int width, int height) {
 //		Log.d("bkb", "surface changed");
 		
+		int[] range = new int[2];
+		int[] precision = new int[1];
+		
+		GLES20.glGetShaderPrecisionFormat(GLES20.GL_VERTEX_SHADER, GLES20.GL_LOW_FLOAT, range, 0, precision, 0);
+		Log.d("bkb", "vertex low " + range[0] + " " + range[1] + " " + precision[0]);
+		GLES20.glGetShaderPrecisionFormat(GLES20.GL_VERTEX_SHADER, GLES20.GL_MEDIUM_FLOAT, range, 0, precision, 0);
+		Log.d("bkb", "vertex medium " + range[0] + " " + range[1] + " " + precision[0]);
+		GLES20.glGetShaderPrecisionFormat(GLES20.GL_VERTEX_SHADER, GLES20.GL_HIGH_FLOAT, range, 0, precision, 0);
+		Log.d("bkb", "vertex high " + range[0] + " " + range[1] + " " + precision[0]);
+		
+		GLES20.glGetShaderPrecisionFormat(GLES20.GL_FRAGMENT_SHADER, GLES20.GL_LOW_FLOAT, range, 0, precision, 0);
+		Log.d("bkb", "frag low " + range[0] + " " + range[1] + " " + precision[0]);
+		GLES20.glGetShaderPrecisionFormat(GLES20.GL_FRAGMENT_SHADER, GLES20.GL_MEDIUM_FLOAT, range, 0, precision, 0);
+		Log.d("bkb", "frag medium " + range[0] + " " + range[1] + " " + precision[0]);
+		GLES20.glGetShaderPrecisionFormat(GLES20.GL_FRAGMENT_SHADER, GLES20.GL_HIGH_FLOAT, range, 0, precision, 0);
+		Log.d("bkb", "frag high " + range[0] + " " + range[1] + " " + precision[0]);
+		
+//		width = 683;
+//		height = 683;
+//		width = 3600;
+//		height = 5302;
+		if (WIDTH_TO_USE != -1) {
+			width = WIDTH_TO_USE;
+		}
+		if (HEIGHT_TO_USE != -1) {
+			height = HEIGHT_TO_USE;
+		}
+//		height = width;
+		Log.d("bkb", "width height " + width + " " + height);
+		
 		try {
 			
 //			String exts = GLES20.glGetString(GLES20.GL_EXTENSIONS).replace(' ', '\n');
@@ -203,11 +250,11 @@ public class MyRenderer implements GLWallpaperService.Renderer {
 			
 //			Log.d("bkb", "strings: " + directFragmentShaderString.substring(0,  20) + "     " + evolveFragmentShaderString.substring(0, 20));
 			
-			String vertexShader = String.format(Locale.US, vertexShaderString, width, height);
+			String vertexShader = String.format(Locale.US, vertexShaderString, 1.0/(double)width, 1.0/(double)height);
 			
-			String evolveFragmentShader = String.format(Locale.US, evolveFragmentShaderString, width, height);
+			String evolveFragmentShader = String.format(Locale.US, evolveFragmentShaderString, 1.0/(double)width, 1.0/(double)height);
 			
-			String directFragmentShader = String.format(Locale.US, directFragmentShaderString, width, height);
+			String directFragmentShader = String.format(Locale.US, directFragmentShaderString, 1.0/(double)width, 1.0/(double)height);
 			
 			directShader = new Shader(vertexShader, directFragmentShader);
 			evolveShader = new Shader(vertexShader, evolveFragmentShader);
@@ -271,17 +318,18 @@ public class MyRenderer implements GLWallpaperService.Renderer {
 		
 		GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
 		GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textureA);
-		
+
 		GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_S, GLES20.GL_CLAMP_TO_EDGE);
 		GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_T, GLES20.GL_CLAMP_TO_EDGE);
-		GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_NEAREST);
-		GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_NEAREST);
-
+		GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, TEXTURE_FILTER_PARAM);
+		GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, TEXTURE_FILTER_PARAM);
+		
 		texBufferA = ByteBuffer.allocateDirect(2 * width * height).order(ByteOrder.nativeOrder());
 		
 		Random rand = new Random();
-		for (int i = 0; i < width * height / 2; i++) {
+		for (int i = 0; i < width * height / 20; i++) {
 			int index = rand.nextInt(width * height);
+//			int index = 4 * i;
 			if (RGBA) {
 				int b = rand.nextInt(2);
 				int a = rand.nextInt(2);
@@ -297,6 +345,7 @@ public class MyRenderer implements GLWallpaperService.Renderer {
 			}
 		}
 		
+		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 		GLES20.glTexImage2D(GLES20.GL_TEXTURE_2D, 0, GLES20.GL_RGBA, width, height, 0, GLES20.GL_RGBA, GLES20.GL_UNSIGNED_SHORT_4_4_4_4, texBufferA);
 		
 		GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, fbA);
@@ -317,11 +366,12 @@ public class MyRenderer implements GLWallpaperService.Renderer {
 		
 		GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_S, GLES20.GL_CLAMP_TO_EDGE);
 		GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_T, GLES20.GL_CLAMP_TO_EDGE);
-		GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_NEAREST);
-		GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_NEAREST);
+		GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, TEXTURE_FILTER_PARAM);
+		GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, TEXTURE_FILTER_PARAM);
 		
 		texBufferB = ByteBuffer.allocateDirect(2 * width * height).order(ByteOrder.nativeOrder());
 		
+		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 		GLES20.glTexImage2D(GLES20.GL_TEXTURE_2D, 0, GLES20.GL_RGBA, width, height, 0, GLES20.GL_RGBA, GLES20.GL_UNSIGNED_SHORT_4_4_4_4, texBufferB);
 		
 		GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, fbB);
@@ -330,11 +380,14 @@ public class MyRenderer implements GLWallpaperService.Renderer {
 		
 		if (DIAGNOSTICS) checkFramebuffer();
 		
+		float offsetX = HALF_PIXEL_CORRECTION ? (0.5f/(float)width) : 0;
+		float offsetY = HALF_PIXEL_CORRECTION ? (0.5f/(float)height) : 0;
 		
 		float verts[] = 
-			{ -1, -1, 0, 1,     0, 0,
-			  -1,  3, 0, 1,     0, 2,
-			   3, -1, 0, 1,     2, 0 };
+			{ -1, -1, 0, 1,     0+offsetX, 0+offsetY,
+			  -1,  1, 0, 1,     0+offsetX, 1+offsetY,
+			   1, -1, 0, 1,     1+offsetX, 0+offsetY,
+			   1, 1, 0, 1,     1+offsetX, 1+offsetY};
 		
 		FloatBuffer vertexBuffer = ByteBuffer.allocateDirect(verts.length * FLOAT_SIZE_BYTES).order(ByteOrder.nativeOrder()).asFloatBuffer();
 		vertexBuffer.put(verts);
@@ -345,7 +398,7 @@ public class MyRenderer implements GLWallpaperService.Renderer {
         GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, array);
         GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, verts.length * FLOAT_SIZE_BYTES, vertexBuffer, GLES20.GL_STATIC_DRAW);
         
-        byte indices[] = { 0, 1, 2 };
+        byte indices[] = { 0, 1, 2, 3};
 		
 		ByteBuffer indexBuffer = ByteBuffer.allocateDirect(indices.length * 1).order(ByteOrder.nativeOrder());
 		indexBuffer.put(indices);

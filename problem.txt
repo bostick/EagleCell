@@ -1,0 +1,51 @@
+
+on Galaxy Tab 4 8"
+
+evolve shader has mediump float precision
+
+640x640 size is fine
+
+641 or greater width or height has problems
+
+evolve shader highp precision is fine
+
+Galaxy Tab 4 8"
+04-11 17:00:24.205: D/bkb(2050): vertex low 127 127 23
+04-11 17:00:24.205: D/bkb(2050): vertex medium 127 127 23
+04-11 17:00:24.205: D/bkb(2050): vertex high 127 127 23
+04-11 17:00:24.205: D/bkb(2050): frag low 15 15 10
+04-11 17:00:24.205: D/bkb(2050): frag medium 15 15 10
+04-11 17:00:24.205: D/bkb(2050): frag high 127 127 23
+
+
+DROID RAZR
+04-11 18:12:16.386: D/bkb(8751): vertex low 15 15 10
+04-11 18:12:16.386: D/bkb(8751): vertex medium 15 15 10
+04-11 18:12:16.386: D/bkb(8751): vertex high 127 127 23
+04-11 18:12:16.386: D/bkb(8751): frag low 15 15 10
+04-11 18:12:16.386: D/bkb(8751): frag medium 15 15 10
+04-11 18:12:16.386: D/bkb(8751): frag high 127 127 23
+
+
+nexus 10
+04-11 18:31:19.271: D/bkb(3132): vertex low 15 15 10
+04-11 18:31:19.271: D/bkb(3132): vertex medium 15 15 10
+04-11 18:31:19.271: D/bkb(3132): vertex high 127 127 23
+04-11 18:31:19.271: D/bkb(3132): frag low 15 15 10
+04-11 18:31:19.271: D/bkb(3132): frag medium 15 15 10
+04-11 18:31:19.271: D/bkb(3132): frag high 127 127 23
+04-11 18:31:19.271: D/bkb(3132): width height 1600 2302
+
+
+http://www.youi.tv/mobile-gpu-floating-point-accuracy-variances/
+http://community.arm.com/groups/arm-mali-graphics/blog/2013/05/29/benchmarking-floating-point-precision-in-mobile-gpus
+http://community.arm.com/groups/arm-mali-graphics/blog/2013/06/11/benchmarking-floating-point-precision-in-mobile-gpus--part-ii
+http://community.arm.com/groups/arm-mali-graphics/blog/2013/10/10/benchmarking-floating-point-precision-in-mobile-gpus--part-iii
+
+
+
+
+https://msdn.microsoft.com/en-us/library/windows/desktop/bb219690(v=vs.85).aspx
+
+
+

@@ -1,0 +1,7 @@
+
+
+borrowed heavily from
+http://blog.angusforbes.com/openglglsl-render-to-texture/
+http://nullprogram.com/blog/2014/06/10/
+
+world wrap-around
