@@ -4,4 +4,19 @@ borrowed heavily from
 http://blog.angusforbes.com/openglglsl-render-to-texture/
 http://nullprogram.com/blog/2014/06/10/
 
+256x256 texture to start?
+
 world wrap-around
+
+
+pinch and zoom, pan
+
+provide android wallpaper
+have a configuration screen with various checkboxes
+
+
+
+galaxy tab 4
+fun.png
+using GL_LINEAR?
+
