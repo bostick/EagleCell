@@ -20,3 +20,14 @@ galaxy tab 4
 fun.png
 using GL_LINEAR?
 
+
+
+tap cells to change color/states
+
+port to libgdx
+
+
+buy a galaxy tab 4 8"?
+dive into [android graphics links]
+
+
