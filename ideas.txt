@@ -36,6 +36,26 @@ buy a galaxy tab 4 8"?
 dive into [android graphics links]
 
 
+How to Simulate Cellular Automata with Shaders
+http://www.alanzucconi.com/2016/03/16/cellular-automata-with-shaders/
+
+
+
+Fluid dynamics with cellular automata on a GPU
+http://zvold.blogspot.co.uk/2010/04/fluid-dynamics-with-cellular-automata.html
+
+
+Margolus neighborhood in cellular automata: "TM GAS" and "Critters" on a GPU
+http://zvold.blogspot.co.uk/2010/03/margolus-neighborhood-in-cellular.html
+
+
+
+Conway's "Life" and "Brian's Brain" cellular automata using GPU
+http://zvold.blogspot.co.uk/2010/01/conways-life-and-brians-brain-cellular.html
+
+
+
+
 
 compute shaders
 
