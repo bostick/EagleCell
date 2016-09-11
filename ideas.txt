@@ -9,6 +9,12 @@ http://nullprogram.com/blog/2014/06/10/
 world wrap-around
 
 
+
+Life in the Stencil Buffer
+http://www.glprogramming.com/red/chapter14.html
+
+
+
 use this guy:
 http://www.conwaylife.com/forums/viewtopic.php?f=2&t=2057
 
