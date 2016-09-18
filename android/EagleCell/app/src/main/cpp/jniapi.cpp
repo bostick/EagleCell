@@ -13,28 +13,28 @@
 static ANativeWindow *window = 0;
 static Renderer *renderer = 0;
 
-JNIEXPORT void JNICALL Java_com_brentonbostick_eaglecell_MainActivity_nativeOnStart(JNIEnv* jenv, jobject obj)
+JNIEXPORT void JNICALL Java_com_brentonbostick_eaglecell_MainNativeActivity_nativeOnStart(JNIEnv* jenv, jobject obj)
 {
     LOG_INFO("nativeOnStart");
     renderer = new Renderer();
     return;
 }
 
-JNIEXPORT void JNICALL Java_com_brentonbostick_eaglecell_MainActivity_nativeOnResume(JNIEnv* jenv, jobject obj)
+JNIEXPORT void JNICALL Java_com_brentonbostick_eaglecell_MainNativeActivity_nativeOnResume(JNIEnv* jenv, jobject obj)
 {
     LOG_INFO("nativeOnResume");
     renderer->start();
     return;
 }
 
-JNIEXPORT void JNICALL Java_com_brentonbostick_eaglecell_MainActivity_nativeOnPause(JNIEnv* jenv, jobject obj)
+JNIEXPORT void JNICALL Java_com_brentonbostick_eaglecell_MainNativeActivity_nativeOnPause(JNIEnv* jenv, jobject obj)
 {
     LOG_INFO("nativeOnPause");
     renderer->stop();
     return;
 }
 
-JNIEXPORT void JNICALL Java_com_brentonbostick_eaglecell_MainActivity_nativeOnStop(JNIEnv* jenv, jobject obj)
+JNIEXPORT void JNICALL Java_com_brentonbostick_eaglecell_MainNativeActivity_nativeOnStop(JNIEnv* jenv, jobject obj)
 {
     LOG_INFO("nativeOnStop");
     delete renderer;
@@ -42,7 +42,7 @@ JNIEXPORT void JNICALL Java_com_brentonbostick_eaglecell_MainActivity_nativeOnSt
     return;
 }
 
-JNIEXPORT void JNICALL Java_com_brentonbostick_eaglecell_MainActivity_nativeSetSurface(JNIEnv* jenv, jobject obj, jobject surface)
+JNIEXPORT void JNICALL Java_com_brentonbostick_eaglecell_MainNativeActivity_nativeSetSurface(JNIEnv* jenv, jobject obj, jobject surface)
 {
     if (surface != 0) {
         window = ANativeWindow_fromSurface(jenv, surface);
@@ -55,4 +55,3 @@ JNIEXPORT void JNICALL Java_com_brentonbostick_eaglecell_MainActivity_nativeSetS
 
     return;
 }
-
