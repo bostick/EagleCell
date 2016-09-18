@@ -47,5 +47,6 @@ http://community.arm.com/groups/arm-mali-graphics/blog/2013/10/10/benchmarking-f
 
 https://msdn.microsoft.com/en-us/library/windows/desktop/bb219690(v=vs.85).aspx
 
+http://hacksoflife.blogspot.com/2009/12/texture-coordinate-system-for-opengl.html
 
 

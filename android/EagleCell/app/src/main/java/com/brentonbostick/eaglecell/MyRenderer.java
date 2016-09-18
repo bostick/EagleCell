@@ -14,6 +14,8 @@ import android.content.Context;
 import android.opengl.GLES20;
 import android.util.Log;
 
+import static android.opengl.GLES20.*;
+
 public class MyRenderer implements GLWallpaperService.Renderer {
 	
 	static final boolean DIAGNOSTICS = true;
@@ -350,7 +352,7 @@ public class MyRenderer implements GLWallpaperService.Renderer {
 		
 		GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, fbA);
 		
-		GLES20.glFramebufferTexture2D(GLES20.GL_FRAMEBUFFER, GLES20.GL_COLOR_ATTACHMENT0, GLES20.GL_TEXTURE_2D, textureA, 0);		
+		GLES20.glFramebufferTexture2D(GLES20.GL_FRAMEBUFFER, GLES20.GL_COLOR_ATTACHMENT0, GLES20.GL_TEXTURE_2D, textureA, 0);
 		
 		if (DIAGNOSTICS) checkFramebuffer();
 		

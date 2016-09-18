@@ -225,7 +225,7 @@ bool Renderer::initialize()
 
 
 
-    GLuint shader = glCreateShader(GL_VERTEX_SHADER );
+    //GLuint shader = glCreateShader(GL_VERTEX_SHADER );
 
     return true;
 }

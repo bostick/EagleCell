@@ -854,7 +854,7 @@ class GLThread extends Thread {
  * @deprecated Use {@link GLSurfaceView.EGLConfigChooser} instead.
  */
 @Deprecated
-interface EGLConfigChooser extends GLSurfaceView.EGLConfigChooser {
+interface EGLConfigChooser extends android.opengl.GLSurfaceView.EGLConfigChooser {
 }
 
 abstract class BaseConfigChooser implements EGLConfigChooser {
