@@ -1,0 +1,20 @@
+[
+  {
+    "level": "INFO",
+    "message": "Start JSON generation. Platform version: 15 min SDK version: x86",
+    "file": "/Users/brenton/Documents/GitHub/EagleCell/android/EagleCell/app/Android.mk",
+    "tag": "debug|x86"
+  },
+  {
+    "level": "INFO",
+    "message": "JSON \u0027/Users/brenton/Documents/GitHub/EagleCell/android/EagleCell/app/.cxx/ndkBuild/debug/x86/android_gradle_build.json\u0027 was up-to-date",
+    "file": "/Users/brenton/Documents/GitHub/EagleCell/android/EagleCell/app/Android.mk",
+    "tag": "debug|x86"
+  },
+  {
+    "level": "INFO",
+    "message": "JSON generation completed without problems",
+    "file": "/Users/brenton/Documents/GitHub/EagleCell/android/EagleCell/app/Android.mk",
+    "tag": "debug|x86"
+  }
+]

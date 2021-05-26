@@ -1,0 +1,142 @@
+{
+  "abi": "X86",
+  "abiPlatformVersion": 15,
+  "buildSettings": {
+    "environmentVariables": []
+  },
+  "cxxBuildFolder": "/Users/brenton/Documents/GitHub/EagleCell/android/EagleCell/app/.cxx/ndkBuild/debug/x86",
+  "info": {
+    "abi": "X86",
+    "bitness": 32,
+    "deprecated": false,
+    "default": true
+  },
+  "originalCxxBuildFolder": "/Users/brenton/Documents/GitHub/EagleCell/android/EagleCell/app/.cxx/ndkBuild/debug/x86",
+  "variant": {
+    "buildSystemArgumentList": [],
+    "buildTargetSet": [],
+    "implicitBuildTargetSet": [],
+    "cFlagsList": [],
+    "cmakeSettingsConfiguration": "android-gradle-plugin-predetermined-name",
+    "cppFlagsList": [],
+    "isDebuggableEnabled": true,
+    "module": {
+      "buildSystem": "NDK_BUILD",
+      "cmakeToolchainFile": "/Users/brenton/Library/Android/sdk/ndk/android-ndk-r17c/build/cmake/android.toolchain.cmake",
+      "cxxFolder": "/Users/brenton/Documents/GitHub/EagleCell/android/EagleCell/app/.cxx",
+      "gradleModulePathName": ":app",
+      "intermediatesFolder": "/Users/brenton/Documents/GitHub/EagleCell/android/EagleCell/app/build/intermediates",
+      "makeFile": "/Users/brenton/Documents/GitHub/EagleCell/android/EagleCell/app/Android.mk",
+      "moduleBuildFile": "/Users/brenton/Documents/GitHub/EagleCell/android/EagleCell/app/build.gradle",
+      "moduleRootFolder": "/Users/brenton/Documents/GitHub/EagleCell/android/EagleCell/app",
+      "ndkDefaultAbiList": [
+        "ARMEABI_V7A",
+        "ARM64_V8A",
+        "X86",
+        "X86_64"
+      ],
+      "ndkFolder": "/Users/brenton/Library/Android/sdk/ndk/android-ndk-r17c",
+      "ndkMetaAbiList": [
+        {
+          "abi": "ARMEABI_V7A",
+          "bitness": 32,
+          "deprecated": false,
+          "default": true
+        },
+        {
+          "abi": "ARM64_V8A",
+          "bitness": 64,
+          "deprecated": false,
+          "default": true
+        },
+        {
+          "abi": "X86",
+          "bitness": 32,
+          "deprecated": false,
+          "default": true
+        },
+        {
+          "abi": "X86_64",
+          "bitness": 64,
+          "deprecated": false,
+          "default": true
+        }
+      ],
+      "ndkMetaPlatforms": {
+        "min": 14,
+        "max": 28,
+        "aliases": {
+          "20": 19,
+          "25": 24,
+          "J": 16,
+          "J-MR1": 17,
+          "J-MR2": 18,
+          "K": 19,
+          "L": 21,
+          "L-MR1": 22,
+          "M": 23,
+          "N": 24,
+          "N-MR1": 24,
+          "O": 26,
+          "O-MR1": 27,
+          "P": 28
+        }
+      },
+      "ndkSupportedAbiList": [
+        "ARMEABI_V7A",
+        "ARM64_V8A",
+        "X86",
+        "X86_64"
+      ],
+      "ndkDefaultStl": "SYSTEM",
+      "ndkVersion": "17.2.4988734",
+      "project": {
+        "compilerSettingsCacheFolder": "/Users/brenton/Documents/GitHub/EagleCell/android/EagleCell/.cxx",
+        "cxxFolder": "/Users/brenton/Documents/GitHub/EagleCell/android/EagleCell/.cxx",
+        "isBuildOnlyTargetAbiEnabled": true,
+        "isCmakeBuildCohabitationEnabled": false,
+        "isNativeCompilerSettingsCacheEnabled": false,
+        "rootBuildGradleFolder": "/Users/brenton/Documents/GitHub/EagleCell/android/EagleCell",
+        "sdkFolder": "/Users/brenton/Library/Android/sdk",
+        "isPrefabEnabled": false
+      },
+      "splitsAbiFilterSet": [],
+      "stlSharedObjectMap": {
+        "GNUSTL_SHARED": {
+          "ARMEABI_V7A": "/Users/brenton/Library/Android/sdk/ndk/android-ndk-r17c/sources/cxx-stl/gnu-libstdc++/4.9/libs/armeabi-v7a/libgnustl_shared.so",
+          "ARM64_V8A": "/Users/brenton/Library/Android/sdk/ndk/android-ndk-r17c/sources/cxx-stl/gnu-libstdc++/4.9/libs/arm64-v8a/libgnustl_shared.so",
+          "X86": "/Users/brenton/Library/Android/sdk/ndk/android-ndk-r17c/sources/cxx-stl/gnu-libstdc++/4.9/libs/x86/libgnustl_shared.so",
+          "X86_64": "/Users/brenton/Library/Android/sdk/ndk/android-ndk-r17c/sources/cxx-stl/gnu-libstdc++/4.9/libs/x86_64/libgnustl_shared.so"
+        },
+        "GNUSTL_STATIC": {},
+        "LIBCXX_SHARED": {
+          "ARMEABI_V7A": "/Users/brenton/Library/Android/sdk/ndk/android-ndk-r17c/sources/cxx-stl/llvm-libc++/libs/armeabi-v7a/libc++_shared.so",
+          "ARM64_V8A": "/Users/brenton/Library/Android/sdk/ndk/android-ndk-r17c/sources/cxx-stl/llvm-libc++/libs/arm64-v8a/libc++_shared.so",
+          "X86": "/Users/brenton/Library/Android/sdk/ndk/android-ndk-r17c/sources/cxx-stl/llvm-libc++/libs/x86/libc++_shared.so",
+          "X86_64": "/Users/brenton/Library/Android/sdk/ndk/android-ndk-r17c/sources/cxx-stl/llvm-libc++/libs/x86_64/libc++_shared.so"
+        },
+        "LIBCXX_STATIC": {},
+        "NONE": {},
+        "STLPORT_SHARED": {
+          "ARMEABI_V7A": "/Users/brenton/Library/Android/sdk/ndk/android-ndk-r17c/sources/cxx-stl/stlport/libs/armeabi-v7a/libstlport_shared.so",
+          "ARM64_V8A": "/Users/brenton/Library/Android/sdk/ndk/android-ndk-r17c/sources/cxx-stl/stlport/libs/arm64-v8a/libstlport_shared.so",
+          "X86": "/Users/brenton/Library/Android/sdk/ndk/android-ndk-r17c/sources/cxx-stl/stlport/libs/x86/libstlport_shared.so",
+          "X86_64": "/Users/brenton/Library/Android/sdk/ndk/android-ndk-r17c/sources/cxx-stl/stlport/libs/x86_64/libstlport_shared.so"
+        },
+        "STLPORT_STATIC": {},
+        "SYSTEM": {}
+      }
+    },
+    "objFolder": "/Users/brenton/Documents/GitHub/EagleCell/android/EagleCell/app/build/intermediates/ndkBuild/debug/obj/local",
+    "variantName": "debug",
+    "validAbiList": [
+      "ARMEABI_V7A",
+      "ARM64_V8A",
+      "X86",
+      "X86_64"
+    ],
+    "prefabDirectory": "/Users/brenton/Documents/GitHub/EagleCell/android/EagleCell/app/.cxx/ndkBuild/debug/prefab",
+    "prefabPackageDirectoryList": []
+  },
+  "prefabFolder": "/Users/brenton/Documents/GitHub/EagleCell/android/EagleCell/app/.cxx/ndkBuild/debug/prefab/x86"
+}

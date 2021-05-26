@@ -19,15 +19,15 @@ import static android.opengl.GLES20.*;
 public class MyRenderer implements GLWallpaperService.Renderer {
 	
 	static final boolean DIAGNOSTICS = true;
-	static final boolean RGBA = false;
-	static final int TEXTURE_FILTER_PARAM = GLES20.GL_NEAREST;
+	static final boolean RGBA = true;
+	static final int TEXTURE_FILTER_PARAM = GLES20.GL_LINEAR;
 	static final boolean HALF_PIXEL_CORRECTION = false;
-//	static final int WIDTH_TO_USE = 341;
-//	static final int HEIGHT_TO_USE = 341;
+	static final int WIDTH_TO_USE = 683;
+	static final int HEIGHT_TO_USE = 683;
 //	static final int WIDTH_TO_USE = 683;
 //	static final int HEIGHT_TO_USE = 683;
-	static final int WIDTH_TO_USE = -1;
-	static final int HEIGHT_TO_USE = -1;
+	//static final int WIDTH_TO_USE = -1;
+	//static final int HEIGHT_TO_USE = -1;
 	
 	static final int STEPS = 1;
 	
@@ -204,24 +204,31 @@ public class MyRenderer implements GLWallpaperService.Renderer {
 	@Override
 	public void onSurfaceChanged(GL10 glUnused, int width, int height) {
 //		Log.d("bkb", "surface changed");
-		
+		if (DIAGNOSTICS) checkGlError("onSurfaceChanged");
+
 		int[] range = new int[2];
 		int[] precision = new int[1];
 		
 		GLES20.glGetShaderPrecisionFormat(GLES20.GL_VERTEX_SHADER, GLES20.GL_LOW_FLOAT, range, 0, precision, 0);
+		if (DIAGNOSTICS) checkGlError("onSurfaceChanged");
 		Log.d("bkb", "vertex low " + range[0] + " " + range[1] + " " + precision[0]);
 		GLES20.glGetShaderPrecisionFormat(GLES20.GL_VERTEX_SHADER, GLES20.GL_MEDIUM_FLOAT, range, 0, precision, 0);
+		if (DIAGNOSTICS) checkGlError("onSurfaceChanged");
 		Log.d("bkb", "vertex medium " + range[0] + " " + range[1] + " " + precision[0]);
 		GLES20.glGetShaderPrecisionFormat(GLES20.GL_VERTEX_SHADER, GLES20.GL_HIGH_FLOAT, range, 0, precision, 0);
+		if (DIAGNOSTICS) checkGlError("onSurfaceChanged");
 		Log.d("bkb", "vertex high " + range[0] + " " + range[1] + " " + precision[0]);
 		
 		GLES20.glGetShaderPrecisionFormat(GLES20.GL_FRAGMENT_SHADER, GLES20.GL_LOW_FLOAT, range, 0, precision, 0);
+		if (DIAGNOSTICS) checkGlError("onSurfaceChanged");
 		Log.d("bkb", "frag low " + range[0] + " " + range[1] + " " + precision[0]);
 		GLES20.glGetShaderPrecisionFormat(GLES20.GL_FRAGMENT_SHADER, GLES20.GL_MEDIUM_FLOAT, range, 0, precision, 0);
+		if (DIAGNOSTICS) checkGlError("onSurfaceChanged");
 		Log.d("bkb", "frag medium " + range[0] + " " + range[1] + " " + precision[0]);
 		GLES20.glGetShaderPrecisionFormat(GLES20.GL_FRAGMENT_SHADER, GLES20.GL_HIGH_FLOAT, range, 0, precision, 0);
+		if (DIAGNOSTICS) checkGlError("onSurfaceChanged");
 		Log.d("bkb", "frag high " + range[0] + " " + range[1] + " " + precision[0]);
-		
+		if (DIAGNOSTICS) checkGlError("onSurfaceChanged");
 //		width = 683;
 //		height = 683;
 //		width = 3600;
@@ -262,13 +269,13 @@ public class MyRenderer implements GLWallpaperService.Renderer {
 			evolveShader = new Shader(vertexShader, evolveFragmentShader);
 			
 			GLES20.glUseProgram(directShader.program);
-			
+			if (DIAGNOSTICS) checkGlError("onSurfaceChanged");
 			direct_uTexture = GLES20.glGetUniformLocation(directShader.program, "uTexture");
 			direct_aPosition = GLES20.glGetAttribLocation(directShader.program, "aPosition");
 			direct_aTextureCoord = GLES20.glGetAttribLocation(directShader.program, "aTextureCoord");
 			
 			GLES20.glUseProgram(evolveShader.program);
-			
+			if (DIAGNOSTICS) checkGlError("onSurfaceChanged");
 			evolve_uTexture = GLES20.glGetUniformLocation(evolveShader.program, "uTexture");
 			evolve_aPosition = GLES20.glGetAttribLocation(evolveShader.program, "aPosition");
 			evolve_aTextureCoord = GLES20.glGetAttribLocation(evolveShader.program, "aTextureCoord");
@@ -309,12 +316,12 @@ public class MyRenderer implements GLWallpaperService.Renderer {
 	}
 	
 	private void setupFBOsAndTextures(int width, int height) {
-		
+		if (DIAGNOSTICS) checkGlError("setupFBOsAndTextures");
 		int[] out = new int[1];
 		
 		GLES20.glGenFramebuffers(1, out, 0);
 		fbA = out[0];
-		
+		if (DIAGNOSTICS) checkGlError("setupFBOsAndTextures");
 		GLES20.glGenTextures(1, out, 0);
 		textureA = out[0];
 		
@@ -325,7 +332,7 @@ public class MyRenderer implements GLWallpaperService.Renderer {
 		GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_T, GLES20.GL_CLAMP_TO_EDGE);
 		GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, TEXTURE_FILTER_PARAM);
 		GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, TEXTURE_FILTER_PARAM);
-		
+		if (DIAGNOSTICS) checkGlError("setupFBOsAndTextures");
 		texBufferA = ByteBuffer.allocateDirect(2 * width * height).order(ByteOrder.nativeOrder());
 		
 		Random rand = new Random();
@@ -362,24 +369,24 @@ public class MyRenderer implements GLWallpaperService.Renderer {
 		
 		GLES20.glGenTextures(1, out, 0);
 		textureB = out[0];
-		
+		if (DIAGNOSTICS) checkGlError("setupFBOsAndTextures");
 		GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
 		GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textureB);
-		
+		if (DIAGNOSTICS) checkGlError("setupFBOsAndTextures");
 		GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_S, GLES20.GL_CLAMP_TO_EDGE);
 		GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_T, GLES20.GL_CLAMP_TO_EDGE);
 		GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, TEXTURE_FILTER_PARAM);
 		GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, TEXTURE_FILTER_PARAM);
-		
+		if (DIAGNOSTICS) checkGlError("setupFBOsAndTextures");
 		texBufferB = ByteBuffer.allocateDirect(2 * width * height).order(ByteOrder.nativeOrder());
 		
 		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 		GLES20.glTexImage2D(GLES20.GL_TEXTURE_2D, 0, GLES20.GL_RGBA, width, height, 0, GLES20.GL_RGBA, GLES20.GL_UNSIGNED_SHORT_4_4_4_4, texBufferB);
-		
+		if (DIAGNOSTICS) checkGlError("setupFBOsAndTextures");
 		GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, fbB);
-		
+		if (DIAGNOSTICS) checkGlError("setupFBOsAndTextures");
 		GLES20.glFramebufferTexture2D(GLES20.GL_FRAMEBUFFER, GLES20.GL_COLOR_ATTACHMENT0, GLES20.GL_TEXTURE_2D, textureB, 0);
-		
+		if (DIAGNOSTICS) checkGlError("setupFBOsAndTextures");
 		if (DIAGNOSTICS) checkFramebuffer();
 		
 		float offsetX = HALF_PIXEL_CORRECTION ? (0.5f/(float)width) : 0;
@@ -390,16 +397,20 @@ public class MyRenderer implements GLWallpaperService.Renderer {
 			  -1,  1, 0, 1,     0+offsetX, 1+offsetY,
 			   1, -1, 0, 1,     1+offsetX, 0+offsetY,
 			   1, 1, 0, 1,     1+offsetX, 1+offsetY};
-		
+
 		FloatBuffer vertexBuffer = ByteBuffer.allocateDirect(verts.length * FLOAT_SIZE_BYTES).order(ByteOrder.nativeOrder()).asFloatBuffer();
 		vertexBuffer.put(verts);
 		vertexBuffer.position(0);
-		
+
 		GLES20.glGenBuffers(1, out, 0);
+		if (DIAGNOSTICS) checkGlError("setupFBOsAndTextures");
         array = out[0];
         GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, array);
+		if (DIAGNOSTICS) checkGlError("setupFBOsAndTextures");
         GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, verts.length * FLOAT_SIZE_BYTES, vertexBuffer, GLES20.GL_STATIC_DRAW);
-        
+
+		if (DIAGNOSTICS) checkGlError("setupFBOsAndTextures");
+
         byte indices[] = { 0, 1, 2, 3};
 		
 		ByteBuffer indexBuffer = ByteBuffer.allocateDirect(indices.length * 1).order(ByteOrder.nativeOrder());
