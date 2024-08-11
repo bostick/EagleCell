@@ -1,0 +1,1 @@
+/home/guyc/Documents/git/EagleCell/android/EagleCell/app/build/intermediates/ndkBuild/debug/obj/local/x86

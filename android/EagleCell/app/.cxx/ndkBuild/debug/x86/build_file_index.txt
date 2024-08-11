@@ -1,0 +1,2 @@
+/home/guyc/Documents/git/EagleCell/android/EagleCell/app/Android.mk
+/home/guyc/Documents/git/EagleCell/android/EagleCell/app/Application.mk
