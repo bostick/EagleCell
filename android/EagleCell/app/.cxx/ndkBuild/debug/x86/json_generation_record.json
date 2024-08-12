@@ -1,20 +1,23 @@
 [
   {
     "level": "INFO",
-    "message": "Start JSON generation. Platform version: 15 min SDK version: x86",
-    "file": "/Users/brenton/Documents/GitHub/EagleCell/android/EagleCell/app/Android.mk",
-    "tag": "debug|x86"
+    "message": "Start JSON generation. Platform version: 16 min SDK version: x86",
+    "file": "/home/guyc/Documents/git/EagleCell/android/EagleCell/app/Android.mk",
+    "tag": "debug|x86",
+    "diagnosticCode": "UNKNOWN"
   },
   {
     "level": "INFO",
-    "message": "JSON \u0027/Users/brenton/Documents/GitHub/EagleCell/android/EagleCell/app/.cxx/ndkBuild/debug/x86/android_gradle_build.json\u0027 was up-to-date",
-    "file": "/Users/brenton/Documents/GitHub/EagleCell/android/EagleCell/app/Android.mk",
-    "tag": "debug|x86"
+    "message": "JSON \u0027/home/guyc/Documents/git/EagleCell/android/EagleCell/app/.cxx/ndkBuild/debug/x86/android_gradle_build.json\u0027 was up-to-date",
+    "file": "/home/guyc/Documents/git/EagleCell/android/EagleCell/app/Android.mk",
+    "tag": "debug|x86",
+    "diagnosticCode": "UNKNOWN"
   },
   {
     "level": "INFO",
     "message": "JSON generation completed without problems",
-    "file": "/Users/brenton/Documents/GitHub/EagleCell/android/EagleCell/app/Android.mk",
-    "tag": "debug|x86"
+    "file": "/home/guyc/Documents/git/EagleCell/android/EagleCell/app/Android.mk",
+    "tag": "debug|x86",
+    "diagnosticCode": "UNKNOWN"
   }
 ]
